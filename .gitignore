@@ -58,4 +58,4 @@ typings/
 .env
 
 # VS Code
-.vscode/
+.vscode/*

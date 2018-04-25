@@ -1,6 +1,6 @@
 {
   "name": "interview-address-book",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "strv interview test project",
   "main": "./src/api",
   "scripts": {
