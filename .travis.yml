@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- 8.9.0
+services:
+- mongodb
+env:
+  global:
+  - NODE_ENV=test
+script:
+- npm run test
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: heroku
+  app: interview-address-book
+  repo: kovalenp/interview-address-book
+  api_key:
+    secure: kQCw2eVOOHPot5dieXeUsgBo1mg1zpegbyzoYpxFe27Y60jPXl4aTe/zAu4159gHwOOC9xAnTtVIiqrGfhpYh6AwEx/XUTEn+jpB/l8hd81wv9yLwGm+EmVxp9/EW03sUjY1zjryNYHVcQdPg4kcrUFjsJMVv/azIrs7FK5pvaisCQp+RmEjn2IndIz1dNl0bPZ9ZBXQylLcx8jygf/IyImO4tnYQ9GsunafEG2QvvlND3h4CY3nrWxosdyiUbGP67eWXG2hXAxuCcvY1wFZ7QHIDpJ9pjVDDkKaOjAA2zJIQpm158mh1kfIByvUGz5KilKuRCBb2irAxE6BIgIZM9XtSm/rnDBl52OEu8ElhvotXvi7VwiEh5yPQRsQKAs1TLHUjzRJF2+pc4bk44vKMzUn5wcgfu4QsnnRmUUhdh6e277ziPKikjTuqOxpST8LJeetWkb4laAFqP6MgWYIH8M2UoAj+hjlOwQR8Je6ZywvFAIvm08enFDGE90GC2pAAAbQAjW9Gyq7Fkn7WLEDqaITNX6ZhbHXEezI/W28yQO6vrU1krzZJrw2Wu20KLjsdyLcnhFPUIlvxqHww6kklS0oaxLt9QFb58gYydvQKM7X8kaSYKNyUUZmFWNL81vkApsOPf3mxupbceN35mo9xlPnDJNEBA5RZtiEjp3B2i0=

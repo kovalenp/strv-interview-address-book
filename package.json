@@ -1,0 +1,61 @@
+{
+  "name": "interview-address-book",
+  "version": "1.0.3",
+  "description": "strv interview test project",
+  "main": "./src/api",
+  "scripts": {
+    "start": "node . | ./node_modules/.bin/bunyan",
+    "start-win": "node .",
+    "dev": "nodemon .",
+    "lint": "./node_modules/.bin/eslint ./src",
+    "debug": "node --nolazy --inspect-brk=9229 ./src/api/index.js",
+    "test-unit": "./node_modules/.bin/mocha --opts ./test/mocha.opts ./test/unit/**/*.spec.js",
+    "test-integration": "./node_modules/.bin/mocha --opts ./test/mocha.opts ./test/integration/**/*.spec.js",
+    "test": "npm run lint && npm run test-unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kovalenp/interview-address-book.git"
+  },
+  "keywords": [
+    "strv",
+    "addressbook",
+    "firebase",
+    "mongodb"
+  ],
+  "author": "Pavel Kovalenko <pavel@kovalenko.cz>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kovalenp/interview-address-book/issues"
+  },
+  "homepage": "https://github.com/kovalenp/interview-address-book#readme",
+  "devDependencies": {
+    "@strv/eslint-config-javascript": "^7.11.1",
+    "chai": "^4.1.2",
+    "chance": "^1.0.13",
+    "eslint": "^4.19.1",
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.3",
+    "sinon": "^4.5.0",
+    "supertest-koa-agent": "^0.3.0"
+  },
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "bunyan": "^1.8.12",
+    "crypto": "^1.0.1",
+    "firebase": "4.6.0",
+    "firebase-admin": "5.4.2",
+    "joi": "^13.2.0",
+    "kcors": "^2.2.1",
+    "koa": "^2.5.0",
+    "koa-body": "^2.5.0",
+    "koa-compose": "^4.0.0",
+    "koa-compress": "^3.0.0",
+    "koa-router": "^7.4.0",
+    "koa-static2": "^0.1.8",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.15",
+    "uuid": "^3.2.1",
+    "validator": "^9.4.1"
+  }
+}

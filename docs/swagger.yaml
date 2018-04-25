@@ -1,0 +1,255 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "AddressBook API Docs"
+  x-logo:
+    url: "http://lh3.ggpht.com/DUCI7QFclnCTGsU-UbHCmc6HonMLpFJvlb8VgKIOyxeRR5cuEX0N-nH_TmEvps77v60u=w340"
+    backgroundColor: "#FFFFFF"
+servers:
+  - url: https://interview-address-book.herokuapp.com/
+paths:
+  /register:
+    post:
+      summary: Register a new user in application
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        '200':
+          description: User was registered
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/RegisterResponse"
+        '400':
+          description: Bad request
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Validation
+                message: Invalid data format.
+                errors: [ \"email\" must be valid email]
+        '409':
+          description: This email already registered
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Conflict
+                message: User.Conflict
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnexpectedError"
+              example:
+                correlationId: uyer-34sd-asde-3sds
+                message: Firebase error
+  /login:
+    post:
+      summary: Login existing user
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        '200':
+          description: User was logged in
+          content:
+            application/json:    
+              schema:
+                properties:
+                  token:
+                    type: string
+                example:
+                  token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ
+        '400':
+          description: Bad request
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Validation
+                message: Invalid data format.
+                errors: [ \"email\" must be valid email]
+        '401':
+          description: Unauthorized
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Unauthorized
+                message: Not authorized
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnexpectedError"
+              example:
+                correlationId: asdr-7658-amnj-3ads
+                message: Some error
+  /contact:
+    post:
+      summary: Create new contact in Address Book DB
+      tags:
+        - contact
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Contact"
+      responses:
+        '201':
+          description: Contact was created
+        '400':
+          description: Bad request
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Validation
+                message: Invalid data format.
+                errors: [ \"email\" must be valid email]
+        '401':
+          description: Unauthorized
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                type: Unauthorized
+                message: Not authorized
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnexpectedError"
+              example:
+                correlationId: asdr-7658-amnj-3ads
+                message: Some error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Contact:
+      required:
+        - email
+        - firstName
+        - lastName
+        - address
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+      example:
+        email: write@me.com
+        phone: +420 777 888 999
+        firstName: Joe
+        lastName: Doe
+        address: 12000 Praha 2 Some street
+    RegisterRequest:
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      example:
+        email: write@me.com
+        password: Pa55word
+        firstName: Joe
+        lastName: Doe
+    LoginRequest:
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: write@me.com
+        password: Pa55word
+    RegisterResponse:
+      properties:
+        token:
+          type: string
+        user:
+          type: object
+          properties:
+            _id:
+              type: string
+            email:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+      example:
+        token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ
+        user:
+          _id: 5ae037795e64b90014aee0d2
+          email: write@me.com
+          password: Pa55word
+          firstName: Joe
+          lastName: Doe
+          createdAt: 2018-04-25T08:08:25.128Z
+          updatedAt: 2018-04-25T08:08:25.128Z
+    Error:
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+    UnexpectedError:
+      properties:
+        correlationId:
+          type: string
+        message:
+          type: string
+        stackTrace:
+          type: string
